@@ -2,6 +2,7 @@ import item from './item';
 
 let items = [];
 let hideCheckeditems = false;
+let error = {isError: false, message: ''};
 
 const findById = function (id) {
   return this.items.find(currentItem => currentItem.id === id);
@@ -25,9 +26,9 @@ const findAndUpdate = function(id, newData) {
   return newItem;
 };
 
-const setError = {
-  err: false,
-  message: 'Try again later'
+const setError = function (err) {
+  error.isError = true;
+  error.message = err.message;
 };
 
 export default {
@@ -38,5 +39,6 @@ export default {
   findAndDelete,
   toggleCheckedFilter,
   findAndUpdate,
-  setError
+  setError,
+  error
 };

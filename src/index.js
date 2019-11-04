@@ -9,13 +9,6 @@ import api from './api';
 
 const main = function () {
 
-  api.getItems()
-    .then(res => res.json())
-    .then((items) => {
-      store.items = items;
-      
-    });
-
   
   shoppingList.bindEventListeners();
   shoppingList.render();
