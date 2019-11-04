@@ -32,18 +32,27 @@ const generateShoppingItemsString = function (shoppingList) {
   return items.join('');
 };
 
+const generateError = function(err) {
+  return `<p class="error">${err.message}</p>`;
+};
+
 const render = function () {
   // Filter item list if store prop is true by item.checked === false
 
   api.getItems()
-    .then(response => response.json())
+    
     .then(items => {
+      console.log(items);
       store.items = items;
       if (store.hideCheckedItems) {
         items = items.filter(item => !item.checked);
       }
       const shoppingListItemsString = generateShoppingItemsString(items);
       $('.js-shopping-list').html(shoppingListItemsString);
+    })
+    .catch(err => {
+      $('.checkbox').append(generateError(err));
+      console.error(err);
     });
 };
 
@@ -74,10 +83,14 @@ const handleDeleteItemClicked = function () {
   $('.js-shopping-list').on('click', '.js-item-delete', event => {
     // get the index of the item in store.items
     const id = getItemIdFromElement(event.currentTarget);
-    // delete the item
-    store.findAndDelete(id);
+    api.deleteItem(id)
+      .then(res => res.json())
+      .then(res => {
+        render();
+      });
+    //store.findAndDelete(id);
     // render the updated shopping list
-    render();
+    //render();
   });
 };
 

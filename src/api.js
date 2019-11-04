@@ -2,8 +2,23 @@
 const BASE_URL = 'https://thinkful-list-api.herokuapp.com/Daniel-Wendy';
 
 const getItems = function () {
-  return fetch(`${BASE_URL}/items`);
+  let error;
+  return fetch(`${BASE_URL}/items`)
+    .then(res => {
+      if(!res.ok) {
+        error = {code: res.status};
+      }
+      return res.json();
+    })
+    .then(data => {
+      if (error) {
+        error.message = data.message;
+        return Promise.reject(error);
+      }
+      return data;
+    });
 };
+
 
 const createItem = function(name) {
   let newItem = JSON.stringify({name:name});
@@ -23,8 +38,15 @@ const updateItem = function(id, object) {
   });
 };
 
+const deleteItem = function(id) {
+  return fetch(`${BASE_URL}/items/${id}`, {
+    method: 'DELETE'
+  });
+};
+
 export default {
   getItems,
   createItem,
-  updateItem  
+  updateItem,
+  deleteItem
 };
