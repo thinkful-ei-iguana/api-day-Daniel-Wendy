@@ -11,7 +11,6 @@ const main = function () {
   api.getItems()
   .then(res => res.json())
   .then(res => console.log(res));
-};
   
 
   console.log(api.BASE_URL);
