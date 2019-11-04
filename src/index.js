@@ -17,8 +17,6 @@ const main = function () {
     });
 
   
-
-  console.log(api.BASE_URL);
   shoppingList.bindEventListeners();
   shoppingList.render();
 };
