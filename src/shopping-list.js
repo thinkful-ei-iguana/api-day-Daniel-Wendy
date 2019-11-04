@@ -1,5 +1,5 @@
 import $ from 'jquery';
-
+import api from './api';
 import store from './store';
 import item from './item';
 
@@ -51,8 +51,14 @@ const handleNewItemSubmit = function () {
     event.preventDefault();
     const newItemName = $('.js-shopping-list-entry').val();
     $('.js-shopping-list-entry').val('');
-    store.addItem(newItemName);
-    render();
+    api.createItem(newItemName)
+      .then(response => response.json())
+      .then(newItem => {
+        store.addItem(newItem);
+        render();
+      });
+
+    // render();
   });
 };
 
