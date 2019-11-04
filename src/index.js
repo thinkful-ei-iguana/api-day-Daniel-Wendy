@@ -8,22 +8,21 @@ import api from './api';
 
 
 const main = function () {
+
   api.getItems()
     .then(res => res.json())
     .then((items) => {
-      const item = items[5];
-      return api.updateItem(item.id, { name: 'foobar' });
-    })
-    .then(res => res.json())
-    .then(() => console.log('updated!'));
-  const item = store.items[5];
-  console.log('current name: ' + item.name);
-  store.findAndUpdate(item.id, { name: 'foobar' });
-  console.log('new name: ' + item.name);
+      store.items = items;
+      
+    });
+
+  
+
+  console.log(api.BASE_URL);
+  shoppingList.bindEventListeners();
+  shoppingList.render();
 };
-console.log(api.BASE_URL);
-shoppingList.bindEventListeners();
-shoppingList.render();
+
   
 
 $(main);

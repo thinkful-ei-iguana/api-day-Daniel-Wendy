@@ -1,6 +1,6 @@
 import item from './item';
 
-const items = [];
+let items = [];
 let hideCheckeditems = false;
 
 const findById = function (id) {
@@ -22,8 +22,8 @@ const toggleCheckedFilter = function () {
 };
 
 const findAndUpdate = function(id, newData) {
-  let item = this.items.id;
-  let newItem = Object.assign(newItem, newData);
+  let item = this.findById(id);
+  let newItem = Object.assign(item, newData);
   return newItem;
 };
 
